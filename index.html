@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Para Luz — 8 de Marzo</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500;700&family=Playfair+Display:ital,wght@0,400;1,400;1,700&family=Lato:wght@300;400&display=swap"
+    rel="stylesheet"
+  />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --rose:    #ff4d8d;
+      --pink:    #ff85b3;
+      --violet:  #c0007a;
+      --gold:    #ffd166;
+      --cream:   #fff0f6;
+    }
+
+    html, body {
+      min-height: 100%;
+      font-family: 'Lato', sans-serif;
+      overflow-x: hidden;
+    }
+
+    body {
+      background: linear-gradient(135deg, #1a0028 0%, #5c0050 40%, #b5004e 75%, #ff4d8d 100%);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    /* ── canvas petals ── */
+    canvas#petals {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ── floating hearts bg ── */
+    .hearts-bg {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .heart-float {
+      position: absolute;
+      bottom: -60px;
+      font-size: 1.4rem;
+      opacity: 0;
+      animation: floatUp var(--dur) ease-in var(--delay) infinite;
+      left: var(--x);
+    }
+
+    @keyframes floatUp {
+      0%   { transform: translateY(0) rotate(0deg) scale(1);   opacity: 0; }
+      10%  { opacity: .7; }
+      90%  { opacity: .3; }
+      100% { transform: translateY(-105vh) rotate(360deg) scale(.4); opacity: 0; }
+    }
+
+    /* ── card ── */
+    .card {
+      position: relative;
+      z-index: 10;
+      max-width: 680px;
+      width: 92%;
+      margin: 2rem auto;
+      padding: 3rem 3.5rem;
+      background: rgba(255,255,255,.08);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border: 1px solid rgba(255,255,255,.22);
+      border-radius: 2rem;
+      text-align: center;
+      color: #fff;
+      box-shadow: 0 8px 64px rgba(0,0,0,.45), 0 0 0 1px rgba(255,100,180,.15);
+      animation: fadeSlide .9s ease both;
+    }
+
+    @keyframes fadeSlide {
+      from { opacity: 0; transform: translateY(40px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── date chip ── */
+    .date-chip {
+      display: inline-block;
+      background: linear-gradient(90deg, var(--rose), var(--gold));
+      color: #1a0028;
+      font-size: .78rem;
+      font-weight: 700;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      padding: .35rem 1.1rem;
+      border-radius: 999px;
+      margin-bottom: 1.4rem;
+      animation: fadeSlide .9s .2s ease both;
+    }
+
+    /* ── 8M badge ── */
+    .badge-8m {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 6.5rem;
+      line-height: 1;
+      background: linear-gradient(135deg, #fff 30%, var(--gold) 70%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: fadeSlide .9s .3s ease both, pulse 3s 1.5s ease-in-out infinite;
+      filter: drop-shadow(0 0 18px rgba(255,180,80,.4));
+    }
+
+    @keyframes pulse {
+      0%, 100% { filter: drop-shadow(0 0 14px rgba(255,180,80,.35)); }
+      50%       { filter: drop-shadow(0 0 32px rgba(255,180,80,.75)); }
+    }
+
+    .subtitle-8m {
+      font-size: .8rem;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      color: var(--pink);
+      margin-top: .3rem;
+      margin-bottom: 1.8rem;
+      animation: fadeSlide .9s .4s ease both;
+    }
+
+    /* ── divider ── */
+    .divider {
+      display: flex;
+      align-items: center;
+      gap: .7rem;
+      margin: 1.4rem 0;
+      animation: fadeSlide .9s .45s ease both;
+    }
+    .divider::before, .divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,.35), transparent);
+    }
+    .divider span { font-size: 1rem; }
+
+    /* ── name ── */
+    .name {
+      font-family: 'Dancing Script', cursive;
+      font-size: 4.6rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, #fff 20%, var(--gold) 60%, var(--pink) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1.1;
+      animation: fadeSlide .9s .5s ease both;
+      filter: drop-shadow(0 2px 12px rgba(255,100,160,.5));
+    }
+
+    /* ── message ── */
+    .message {
+      margin-top: 1.8rem;
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 1.05rem;
+      line-height: 1.9;
+      color: rgba(255,255,255,.92);
+      animation: fadeSlide .9s .65s ease both;
+    }
+
+    .message p + p { margin-top: 1rem; }
+
+    .message strong {
+      font-style: normal;
+      color: var(--gold);
+      font-weight: 400;
+    }
+
+    /* ── signature ── */
+    .signature {
+      margin-top: 2rem;
+      font-family: 'Dancing Script', cursive;
+      font-size: 1.5rem;
+      color: var(--gold);
+      animation: fadeSlide .9s .8s ease both;
+    }
+
+    /* ── flowers row ── */
+    .flowers {
+      margin-top: 1.8rem;
+      font-size: 1.6rem;
+      letter-spacing: .25rem;
+      animation: fadeSlide .9s .9s ease both;
+    }
+
+    /* ── footer ── */
+    footer {
+      position: relative;
+      z-index: 10;
+      margin-bottom: 1.2rem;
+      font-size: .72rem;
+      color: rgba(255,255,255,.35);
+      letter-spacing: .08em;
+      text-align: center;
+    }
+
+    /* ── responsive ── */
+    @media (max-width: 480px) {
+      .card { padding: 2rem 1.6rem; }
+      .badge-8m { font-size: 4.8rem; }
+      .name { font-size: 3.4rem; }
+      .message { font-size: .95rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- petal canvas -->
+  <canvas id="petals"></canvas>
+
+  <!-- floating hearts -->
+  <div class="hearts-bg" id="heartsContainer"></div>
+
+  <!-- main card -->
+  <main class="card" role="main">
+    <div class="date-chip">8 de Marzo · 2026</div>
+
+    <div class="badge-8m">8M</div>
+    <p class="subtitle-8m">Día Internacional de la Mujer</p>
+
+    <div class="divider"><span>&#10022;</span></div>
+
+    <h1 class="name">Para Luz</h1>
+
+    <div class="message">
+      <p>
+        Hay nombres que no son solo palabras —<br>
+        son destinos escritos antes de nacer.<br>
+        <strong>Luz</strong> no es solo tu nombre:<br>
+        es lo que eres.
+      </p>
+      <p>
+        Brillo que ilumina cada rincón al que llegas,<br>
+        calor que transforma el frío en abrigo,<br>
+        claridad en medio de cualquier tormenta.
+      </p>
+      <p>
+        Hoy el mundo celebra a las mujeres extraordinarias<br>
+        que lo hacen girar, crecer y florecer.<br>
+        Y yo celebro a <strong>la tuya</strong> —<br>
+        tu fuerza que inspira,<br>
+        tu risa que contagia,<br>
+        tu corazón que enamora.
+      </p>
+      <p>
+        El mundo es más hermoso contigo en él.<br>
+        Y yo soy el más afortunado por tenerte cerca.
+      </p>
+    </div>
+
+    <p class="signature">Con todo mi amor &hearts;</p>
+
+    <div class="flowers" aria-hidden="true">&#127800; &#127801; &#127802; &#127801; &#127800;</div>
+  </main>
+
+  <footer>Con amor &mdash; 8 de Marzo 2026</footer>
+
+  <script>
+    /* ── floating hearts ── */
+    (function () {
+      const emojis = ['❤️','💕','💖','💗','🌸','✨','💝','🌹'];
+      const container = document.getElementById('heartsContainer');
+      for (let i = 0; i < 22; i++) {
+        const el = document.createElement('span');
+        el.className = 'heart-float';
+        el.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+        el.style.setProperty('--x',     Math.random() * 100 + 'vw');
+        el.style.setProperty('--dur',   (6 + Math.random() * 10) + 's');
+        el.style.setProperty('--delay', (Math.random() * 12) + 's');
+        container.appendChild(el);
+      }
+    })();
+
+    /* ── canvas petal rain ── */
+    (function () {
+      const canvas = document.getElementById('petals');
+      const ctx    = canvas.getContext('2d');
+
+      function resize() {
+        canvas.width  = window.innerWidth;
+        canvas.height = window.innerHeight;
+      }
+      resize();
+      window.addEventListener('resize', resize);
+
+      const COLORS = ['#ff85b3','#ff4d8d','#ffd166','#ff69b4','#ffb3d1','#c0007a'];
+      const COUNT  = 60;
+
+      function rnd(a, b) { return a + Math.random() * (b - a); }
+
+      const petals = Array.from({ length: COUNT }, () => ({
+        x:    rnd(0, canvas.width),
+        y:    rnd(-canvas.height, 0),
+        r:    rnd(4, 11),
+        dx:   rnd(-1.2, 1.2),
+        dy:   rnd(1.2, 2.8),
+        rot:  rnd(0, Math.PI * 2),
+        drot: rnd(-0.04, 0.04),
+        color: COLORS[Math.floor(Math.random() * COLORS.length)],
+        alpha: rnd(0.4, 0.85),
+      }));
+
+      function drawPetal(p) {
+        ctx.save();
+        ctx.globalAlpha = p.alpha;
+        ctx.translate(p.x, p.y);
+        ctx.rotate(p.rot);
+        ctx.fillStyle = p.color;
+        ctx.beginPath();
+        ctx.ellipse(0, 0, p.r, p.r * 0.55, 0, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.restore();
+      }
+
+      function loop() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        petals.forEach(p => {
+          drawPetal(p);
+          p.x   += p.dx;
+          p.y   += p.dy;
+          p.rot += p.drot;
+          if (p.y > canvas.height + 20) {
+            p.y = -15;
+            p.x = rnd(0, canvas.width);
+          }
+          if (p.x < -20 || p.x > canvas.width + 20) {
+            p.x = rnd(0, canvas.width);
+          }
+        });
+        requestAnimationFrame(loop);
+      }
+      loop();
+    })();
+  </script>
+</body>
+</html>
