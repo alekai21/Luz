@@ -194,6 +194,51 @@
       animation: fadeSlide .9s .8s ease both;
     }
 
+    /* ── video link ── */
+    .video-wrap {
+      position: relative;
+      margin: 1.8rem 0 0;
+      border-radius: 1rem;
+      overflow: hidden;
+      box-shadow: 0 4px 30px rgba(0,0,0,.5);
+      border: 1px solid rgba(255,255,255,.18);
+      display: block;
+      text-decoration: none;
+    }
+    .video-wrap img {
+      width: 100%;
+      display: block;
+      border-radius: 1rem;
+    }
+    .video-wrap .play-btn {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: .6rem;
+      background: rgba(0,0,0,.38);
+      transition: background .2s;
+    }
+    .video-wrap:hover .play-btn { background: rgba(0,0,0,.22); }
+    .video-wrap .play-btn svg {
+      width: 72px;
+      height: 72px;
+      filter: drop-shadow(0 2px 12px rgba(0,0,0,.6));
+      transition: transform .2s;
+    }
+    .video-wrap:hover .play-btn svg { transform: scale(1.1); }
+    .video-wrap .play-label {
+      font-family: 'Lato', sans-serif;
+      font-size: .82rem;
+      font-weight: 400;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,.9);
+      text-shadow: 0 1px 6px rgba(0,0,0,.6);
+    }
+
     /* ── flowers row ── */
     .flowers {
       margin-top: 1.8rem;
@@ -243,17 +288,6 @@
 
     <div class="message">
       <p>
-        Hay nombres que no son solo palabras —<br>
-        son destinos escritos antes de nacer.<br>
-        <strong>Luz</strong> no es solo tu nombre:<br>
-        es lo que eres.
-      </p>
-      <p>
-        Brillo que ilumina cada rincón al que llegas,<br>
-        calor que transforma el frío en abrigo,<br>
-        claridad en medio de cualquier tormenta.
-      </p>
-      <p>
         Hoy el mundo celebra a las mujeres extraordinarias<br>
         que lo hacen girar, crecer y florecer.<br>
         Y yo celebro a <strong>la tuya</strong> —<br>
@@ -267,7 +301,22 @@
       </p>
     </div>
 
-    <p class="signature">Con todo mi amor &hearts;</p>
+    <p class="signature">Con todo mi amor <br> Alekai &hearts;</p>
+
+    <a class="video-wrap" href="https://youtu.be/85FK7mrdT_A" target="_blank" rel="noopener" aria-label="Ver video en YouTube">
+      <img
+        src="https://img.youtube.com/vi/85FK7mrdT_A/maxresdefault.jpg"
+        alt="Miniatura del video"
+        onerror="this.src='https://img.youtube.com/vi/85FK7mrdT_A/hqdefault.jpg'"
+      />
+      <div class="play-btn">
+        <svg viewBox="0 0 68 48" xmlns="http://www.w3.org/2000/svg">
+          <path d="M66.5 7.7a8.5 8.5 0 0 0-6-6C55.8 0 34 0 34 0S12.2 0 7.5 1.7a8.5 8.5 0 0 0-6 6C0 12.4 0 24 0 24s0 11.6 1.5 16.3a8.5 8.5 0 0 0 6 6C12.2 48 34 48 34 48s21.8 0 26.5-1.7a8.5 8.5 0 0 0 6-6C68 35.6 68 24 68 24s0-11.6-1.5-16.3z" fill="#ff0000"/>
+          <path d="M27 34l18-10-18-10v20z" fill="#fff"/>
+        </svg>
+        <span class="play-label">Ver en YouTube</span>
+      </div>
+    </a>
 
     <div class="flowers" aria-hidden="true">&#127800; &#127801; &#127802; &#127801; &#127800;</div>
   </main>
